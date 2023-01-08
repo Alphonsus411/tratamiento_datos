@@ -64,7 +64,7 @@ class PickleLoader(Loader):
     def load(self, filename):
         print('Archivo Pickle')
         with open(filename) as f:
-            return pickle.load(f)
+            return pickle.load(f.read())
 
 
 """
@@ -90,7 +90,11 @@ es decir, de las tres clases Loader; de ahí que sea de bajo nivel. El método d
 
 
 class UpperTransformer(Transformer):
+    def transform(self):
+        pass
+
     def __init__(self, filename, loader):
+        self.content = None
         self.filename = filename
         self.loader = loader
 
@@ -101,13 +105,17 @@ class UpperTransformer(Transformer):
             self.content = [['Chisme', 'algo'],
                             ['cOsA', 'TRASTO']]
 
-    def transform(self):
+    def transformer(self):
         for i, l in enumerate(self.content):
-            for j, d in enumerate(l):
+           for j, d in enumerate(l):
                 self.content[i][j] = d.upper()
 
 
+# type: ignore
 class LowerTransformer(Transformer):
+    def transform(self):
+        pass
+
     def __init__(self, filename, loader):
         self.filename = filename
         self.loader = loader
@@ -120,17 +128,18 @@ class LowerTransformer(Transformer):
                 ['Chisme', 'algo'],
                 ['cOsA', 'TRASTO']]
 
-    def transform(self):
+    def transformer(self):
         for i, l in enumerate(self.content):
             for j, d in enumerate(l):
-                self.content[i][j] = d.lower()
+                self.content[i][j] = d.lower
+ # type: ignore
 
 
 """
 He aquí como utilizar este puente:
 """
-test1 = UpperTransformer('test.csv', loader=CSVLoader())
-
+test1 = UpperTransformer('datos.csv', loader=CSVLoader())
+# type: ignore
 """
 El componente de implementación se pasa como parámetro. 
 Tan sólo queda usar los métodos. El de bajo nivel:
@@ -147,7 +156,7 @@ test1.transform()
 También es posible ver a qué se parecen los datos así procesados:
 """
 test1.content()
-
+ # type: ignore
 """
 He aquí el uso de los mismos componentes en otro contexto:
 """
@@ -157,7 +166,7 @@ test2.loadDatos()
 test2.transform()
 
 test2.content()
-
+ # type: ignore
 """
 Conclusiones:
 
@@ -172,3 +181,5 @@ donde uno utiliza al otro.
 Las soluciones que emplea la herencia múltiple pueden resultar, en algunos casos, 
 ventajosas, aunque no son las preferentes. 
 """
+
+
