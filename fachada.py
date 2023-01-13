@@ -85,7 +85,16 @@ He aquí cómo utilizar el primero:
 Facade.say('hello', 'World')
 
 """
+He aquí cómo utilizar el segundo:
+"""
+
+facade = Facade()
+facade.dialog('Plic', 'Ploc', ['Nice Factory', 'It works'])
 
 """
+
+
+"""
+
 
 
